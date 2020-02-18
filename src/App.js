@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
-function App() {
+import { TimerDisplay } from './TimerDisplay';
+import CountTime  from './CountTime';
+import {LapDisplay} from './LapDisplay';
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      seconds : 0,
+      minutes : 0,
+      lap : []
+    }
+  }
+  getCountTimeData(data){
+    this.setState({
+      seconds : data.seconds,
+      minutes : data.minutes,
+      lap : data.lap
+    })
+  }
+ render(){
   return (
+    
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React Dev
-        </a>
+        <TimerDisplay {...this.state}/>
+        <CountTime getCountTimeData={this.getCountTimeData.bind(this)} />
+        <LapDisplay lap={this.state.lap}/>
       </header>
     </div>
   );
 }
-
+} 
 export default App;
